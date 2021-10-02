@@ -1,6 +1,7 @@
 {
   "name": "build",
   "version": "0.0.3",
+  "homepage": ".",
   "engines": {
     "node": "14.4.0",
     "npm": "6.14.5"
