@@ -1,10 +1,9 @@
-import React from 'react';
-import Header from './Header';
-import Order from './Order';
-import Inventory from './Inventory';
-import Fish from './Fish';
-import sampleFishes from '../sample-fishes';
-import base from '../base';
+import React from "react";
+import Header from "./Header";
+import Order from "./Order";
+import Inventory from "./Inventory";
+import Fish from "./Fish";
+import sampleFishes from "../sample-fishes";
 class App extends React.Component {
   state = {
     fishes: {},
@@ -18,22 +17,13 @@ class App extends React.Component {
     if (localStorageRef) {
       this.setState({ order: JSON.parse(localStorageRef) });
     }
-
-    this.ref = base.syncState(`${params.storeId}/fishes`, {
-      context: this,
-      state: 'fishes',
-    });
   }
 
   componentDidUpdate() {
-    console.log(this.state.order);
     localStorage.setItem(
       this.props.match.params.storeId,
       JSON.stringify(this.state.order)
     );
-  }
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
   }
 
   addToOrder = (key) => {
@@ -43,7 +33,6 @@ class App extends React.Component {
     order[key] = order[key] + 1 || 1;
     // 3. Call setState to update our state object
     this.setState({ order });
-    console.log(order);
   };
 
   removeFromOrder = (key) => {
@@ -75,15 +64,14 @@ class App extends React.Component {
   deleteFish = (key) => {
     // 1. take a copy of state
     const fishes = { ...this.state.fishes };
-    // 2. update the state
-    fishes[key] = null;
+    // 2. delete entry
+    delete fishes[key];
     // 3.  update state
     this.setState({ fishes });
   };
 
   loadSampleFishes = () => {
     this.setState({ fishes: sampleFishes });
-    console.log(this.state);
   };
 
   render() {
